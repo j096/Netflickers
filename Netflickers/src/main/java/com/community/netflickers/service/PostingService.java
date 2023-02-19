@@ -1,6 +1,7 @@
 package com.community.netflickers.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class PostingService {
 
 	@Transactional
 	public void savePost(PostingDto dto) {
-		dto.setCreatedDate(LocalDateTime.now());
+		dto.setCreatedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		dto.setViews((long)0);
 		postRepo.save(dto.toEntity());
 		
@@ -43,7 +44,7 @@ public class PostingService {
 		Posting post = find.get();
 		
 		post.setContent(dto.getContent());
-		post.setModifiedDate(LocalDateTime.now());
+		post.setModifiedDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		post.setTitle(dto.getTitle());
 		
 		return post.getId();

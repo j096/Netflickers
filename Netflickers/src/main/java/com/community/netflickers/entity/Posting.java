@@ -9,12 +9,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Posting {
 	
 	@Id
@@ -29,13 +32,13 @@ public class Posting {
 	
 	private Long views;
 	
-	private LocalDateTime createdDate;	
+	private String createdDate;	
 	
-	private LocalDateTime modifiedDate;
+	private String modifiedDate;
 	
 	
 	@Builder
-	public Posting(Long id, String title,Long writer, String content, Long views, LocalDateTime createdDate, LocalDateTime modifiedDate
+	public Posting(Long id, String title,Long writer, String content, Long views, String createdDate, String modifiedDate
 			) {
 		
 		this.id = id;
@@ -65,7 +68,7 @@ public class Posting {
 	}
 
 
-	public void setModifiedDate(LocalDateTime modifiedDate) {
+	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 	

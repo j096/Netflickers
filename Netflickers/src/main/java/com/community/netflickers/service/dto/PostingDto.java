@@ -25,9 +25,9 @@ public class PostingDto {
 	
 	private Long views;
 	
-	private LocalDateTime createdDate;	
+	private String createdDate;	
 	
-	private LocalDateTime modifiedDate;
+	private String modifiedDate;
 	
 	@Builder
 	public Posting toEntity() {
@@ -36,6 +36,7 @@ public class PostingDto {
 				.writer(writer)
 				.title(title)
 				.content(content)
+				.views(views)
 				.createdDate(createdDate)
 				.modifiedDate(modifiedDate)
 				.build();

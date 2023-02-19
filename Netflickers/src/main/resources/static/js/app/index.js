@@ -33,11 +33,11 @@ $.fn.serializeObject = function()
 
 };
 
-function postForm(formId, url){
+function postForm(formId, url, msg, href){
 	
 	var data = $('#'+formId).serializeObject();
 	
 	
-	postRequest('/post/save', data);
+	postRequest('/post/save', data, msg, href);
 }
 

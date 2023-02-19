@@ -1,11 +1,23 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>스프링 부트 웹서비스</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-</head>
-<body>
+  {{>layout/header}}
     <h1>게시판목록</h1>
-</body>
-</html>
+    <table class="table table-horizontal table-bordered">
+    	<thead class="thead-strong">
+    	<tr>
+    		<th>No.</th>
+    		<th>제목</th>   
+    		<th>작성일자</th>    
+    		<th>조회수</th>    				 		
+    	</tr>
+    	</thead>
+    	<tbody>
+    	{{#postings}}
+    	<tr>
+	    	<td>{{id}}</td>
+	    	<td><a href="/post/read/{{id}}">{{title}}</a></td>
+	    	<td>{{createdDate}}</td>
+	    	<td>{{views}}</td>
+    	</tr>
+    	{{/postings}}
+    	</tbody>
+    </table>
+ {{>layout/footer}}

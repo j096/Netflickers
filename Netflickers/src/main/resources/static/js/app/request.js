@@ -1,4 +1,4 @@
-function postRequest(url, data){
+function postRequest(url, data, msg, href){
 	    $.ajax({
         type: 'POST',
         url: url,
@@ -7,8 +7,8 @@ function postRequest(url, data){
         data: JSON.stringify(data),
         statusCode:{
 			201:function(data){
-				alert("글이 등록되었습니다.");
-				window.location.href="/";
+				alert(msg);
+				window.location.href=href;
 			}
 		}
     }); 
