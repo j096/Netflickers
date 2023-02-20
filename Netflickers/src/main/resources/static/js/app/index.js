@@ -33,11 +33,19 @@ $.fn.serializeObject = function()
 
 };
 
-function postForm(formId, url, msg, href){
+//form 관련 저장/수정/삭제 리퀘스트 공통 함수
+//form id, request url, response msg, response href
+function postForm(formId, url, method){
 	
 	var data = $('#'+formId).serializeObject();
 	
 	
-	postRequest('/post/save', data, msg, href);
+	postRequest(url, data, method);
+}
+
+//버튼 클릭 시 페이지 이동 공통 함수
+//request url(이동할 페이지)
+function goTo(url){
+	window.location.href=url;
 }
 

@@ -1,14 +1,14 @@
-function postRequest(url, data, msg, href){
+function postRequest(url, data, method){
 	    $.ajax({
-        type: 'POST',
+        type: method,
         url: url,
         dataType: 'json',
         contentType: 'application/json; charset-utf-8',
         data: JSON.stringify(data),
         statusCode:{
-			201:function(data){
-				alert(msg);
-				window.location.href=href;
+			201:function(result){
+				alert(result.message);
+				window.location.href=result.url;
 			}
 		}
     }); 

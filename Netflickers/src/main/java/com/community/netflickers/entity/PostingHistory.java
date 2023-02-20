@@ -1,9 +1,5 @@
 package com.community.netflickers.entity;
 
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.ColumnDefault;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,8 +14,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Posting {
-	
+public class PostingHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,10 +31,11 @@ public class Posting {
 	
 	private String modifiedDate;
 	
+	private String deletedDate;
 	
 	@Builder
-	public Posting(Long id, String title,Long writer, String content, Long views, String createdDate, String modifiedDate
-			) {
+	public PostingHistory(Long id, String title,Long writer, String content, Long views, String createdDate, String modifiedDate
+			,String deletedDate) {
 		
 		this.id = id;
 		
@@ -54,38 +50,13 @@ public class Posting {
 		this.createdDate = createdDate;
 
 		this.modifiedDate = modifiedDate;
-
-	}
-	
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-
-	public void setModifiedDate(String modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-	
-	public PostingHistory toHistory (String deletedDate) {
 		
-		return PostingHistory.builder()
-		.id(id)
-		.title(title)
-		.writer(writer)
-		.content(content)
-		.views(views)
-		.createdDate(createdDate)
-		.modifiedDate(modifiedDate)
-		.deletedDate(deletedDate)
-		.build();
+		this.deletedDate = deletedDate;
 
 	}
-	
+
+	public void setDeletedDate(String deletedDate) {
+		this.deletedDate = deletedDate;
+	}
 
 }
