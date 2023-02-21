@@ -81,12 +81,14 @@ function goTo(url){
 }
 
 
+var origin;
+
 function updateToModifyForm(id){
 	var commentId = $("#"+id+" #id").val();
 	var writer = $("#"+id+" #writer").val();
 	var content = $("#"+id+" #content").text();
 	
-	var origin = $("#"+id).html();
+	origin = $("#"+id).html();
 	
 	var commentForm = '<div>'
     	+'<form class="mb-16px" id="form-comment'+commentId+'">'
@@ -99,10 +101,15 @@ function updateToModifyForm(id){
 	        +'</div>'    	
     	+'</form>'
 		+'<div class="text-end">'
+	    	+'<button type="button" class="btn btn-secondary" id="btn-comment-reset" onClick="resetHtml(\''+id+'\')">취소</button>'
 	    	+'<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="postForm(\'form-comment'+commentId+'\',\'/comment/update/'+commentId+'\',\'PUT\',\'comment-list\')">등록</button>'
 	    +'</div>'
     +'</div>';
 
 	$("#"+id).html(commentForm);
+}
+
+function resetHtml(id){
+	$("#"+id).html(origin);
 }
 
