@@ -39,8 +39,7 @@ public class PostingService {
 		
 		Optional<Posting> find = postRepo.findById(id);
 		Posting post =  find.orElseThrow();
-		//조회수 증가
-		postRepo.updateViewsById(id);
+		post.setViews(post.getViews()+1);
 		
 		return post;
 	}

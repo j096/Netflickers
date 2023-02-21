@@ -1,0 +1,21 @@
+ <br>
+  <div id="div-comment{{id}}">
+  	<input type="hidden" id="id" name="id" value="{{id}}">
+  	<input type="hidden"  id="writer" name="writer" value="{{writer}}">
+	<table class="table table-horizontal">
+		<tr>
+			<td style="width:70%">
+				<span id="content"><pre>{{content}}</pre></span>
+			</td>
+			<td style="text-align:right">
+				<span id="modifiedDate">{{modifiedDate}}</span>
+			</td>
+			{{^deleteYn}}
+				<td style="width:150px;">
+	    			<button type="button" class="btn btn-danger" id="btn-comment-save" onClick="postForm('form-comment','/comment/delete/{{id}}','DELETE')">삭제</button>
+	    			<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="updateToModifyForm('div-comment{{id}}')">수정</button>  
+				</td>
+			{{/deleteYn}}
+		</tr>
+	</table>
+</div>

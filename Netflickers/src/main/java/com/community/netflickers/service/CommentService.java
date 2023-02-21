@@ -1,5 +1,6 @@
 package com.community.netflickers.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,15 @@ public class CommentService {
 	
 	@Autowired
 	CommentRepository commentRepo;
+	
+	@Transactional
+	public List<Comment> getPostComments(Long postId) {
+		
+		List<Comment> comments = commentRepo.findByPostId(postId);
+		
+		return comments;
+	}
+
 
 	@Transactional
 	public Long saveComment(CommentDto dto) {

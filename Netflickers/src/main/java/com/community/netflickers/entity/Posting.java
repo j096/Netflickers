@@ -79,6 +79,11 @@ public class Posting {
 		this.modifiedDate = modifiedDate;
 	}
 	
+
+	public void setViews(Long views) {
+		this.views = views;
+	}
+	
 	public PostingHistory toHistory (String deletedDate) {
 		
 		return PostingHistory.builder()
@@ -93,6 +98,8 @@ public class Posting {
 		.build();
 
 	}
+
+
 	
 
 }

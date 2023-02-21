@@ -1,5 +1,6 @@
 package com.community.netflickers.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.community.netflickers.common.Message;
+import com.community.netflickers.entity.Comment;
 import com.community.netflickers.service.CommentService;
 import com.community.netflickers.service.dto.CommentDto;
 
@@ -28,12 +32,21 @@ public class CommentController {
 	@Autowired
 	private MessageSourceAccessor messageSource;
 	
+	@GetMapping("/list/{postId}")
+	public String comments(@PathVariable Long postId, Model model) {
+		List<Comment> comments = commentService.getPostComments(postId);
+		
+		model.addAttribute("comments",comments);
+		
+		return "layout/comment-list";
+	}
+	
 	@PostMapping("/save")
 	public ResponseEntity save(@RequestBody CommentDto dto) {
 		Long postId = commentService.saveComment(dto);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.save",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId},Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	

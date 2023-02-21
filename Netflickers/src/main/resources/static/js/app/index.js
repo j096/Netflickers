@@ -39,8 +39,18 @@ function postForm(formId, url, method){
 	
 	var data = $('#'+formId).serializeObject();
 	
-	
 	postRequest(url, data, method);
+}
+
+function postUpdateForm(formId, updateId, url, method){
+	
+	var data = $('#'+formId).serializeObject();
+	
+	$('#'+formId)[0].reset();
+	
+	dynamicUpdateRequest(url,data,method, updateId);
+	
+	
 }
 
 //버튼 클릭 시 페이지 이동 공통 함수
@@ -50,7 +60,7 @@ function goTo(url){
 }
 
 
-function updateHtml(id){
+function updateToModifyForm(id){
 	var commentId = $("#"+id+" #id").val();
 	var writer = $("#"+id+" #writer").val();
 	var content = $("#"+id+" #content").text();
