@@ -89,8 +89,8 @@ function updateToModifyForm(id){
 	var origin = $("#"+id).html();
 	
 	var commentForm = '<div>'
-    	+'<form id="form-comment'+commentId+'">'
-			+'<div class="form-group">'
+    	+'<form class="mb-16px" id="form-comment'+commentId+'">'
+			+'<div class="form-group mb-1">'
               +'<label for="writer">작성자</label>'
               +'<input type="text" class="form-control" id="writer" name="writer" value="'+writer+'" readonly>'
        		+'</div>'    	
@@ -98,7 +98,7 @@ function updateToModifyForm(id){
 	          +'<textarea class="form-control form-control-lg" id="content" name="content" placeholder="댓글을 입력하세요">'+content+'</textarea>'
 	        +'</div>'    	
     	+'</form>'
-		+'<div align="right">'
+		+'<div class="text-end">'
 	    	+'<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="postForm(\'form-comment'+commentId+'\',\'/comment/update/'+commentId+'\',\'PUT\',\'comment-list\')">등록</button>'
 	    +'</div>'
     +'</div>';
