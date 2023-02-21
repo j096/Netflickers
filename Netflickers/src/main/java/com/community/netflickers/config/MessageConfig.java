@@ -10,17 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 @Configuration
 public class MessageConfig {
 	
-    @Bean
-    public AcceptHeaderLocaleResolver defaultLocaleResolver() {
-        AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.KOREA);
-
-        return localeResolver;
-    }
 	
     @Bean
     public MessageSource messageSource() throws IOException {
@@ -36,5 +30,5 @@ public class MessageConfig {
     public MessageSourceAccessor messageSourceAccessor() throws IOException {
         return new MessageSourceAccessor(messageSource());
     }
-
+    
 }

@@ -52,8 +52,8 @@ public class CommentController {
 	public ResponseEntity delete(@PathVariable Long id) {
 		Long postId = commentService.deletComment(id);
 		Message msg = new Message();
-		msg.setMessage(messageSource.getMessage("msg.comment.delete"));
-		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId}));
+		msg.setMessage(messageSource.getMessage("msg.comment.delete",Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 
