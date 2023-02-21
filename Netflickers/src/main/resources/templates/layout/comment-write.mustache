@@ -1,16 +1,15 @@
-<br>
-<div>
-	<form id="form-comment">
+<div class="m-1">
+	<form class="mb-16px" id="form-comment">
 	<input type="hidden" class="form-control" id="id" name="postId" value="{{post.id}}">
 		<div class="form-group">
-	      <label for="writer">작성자</label>
+	      <label for="writer" class="form-label">작성자</label>
 	      <input type="text" class="form-control" id="writer" name="writer" value="">
 		</div>    	
 	    <div class="form-group">
 	      <textarea class="form-control form-control-lg" id="content" name="content" placeholder="댓글을 입력하세요"></textarea>
 	    </div>    	
 	</form>
-	<div align="right">   
+	<div  class="text-end">   
 		<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="postForm('form-comment','/comment/save','POST','comment-list')">등록</button>
 	</div>
 </div>

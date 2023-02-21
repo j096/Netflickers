@@ -37,14 +37,42 @@ $.fn.serializeObject = function()
 //form id, request url, response msg, response href
 function postForm(formId, url, method, updateId){
 	
-	var data = $('#'+formId).serializeObject();
+	var check = validate(formId);
 	
-	if(updateId)
-		$('#'+formId)[0].reset();
+	if(check){
+		var data = $('#'+formId).serializeObject();
+		console.log(data);
+		if(updateId)
+			$('#'+formId)[0].reset();
+			
 		
-	
-	postRequest(url, data, method, updateId);
+		postRequest(url, data, method, updateId);
+	}
 }
+
+
+function validate(formId) {
+  'use strict'
+	var check;
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('#'+formId)
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+        if (!form.checkValidity()) {
+			form.classList.add('was-validated')
+			check=false;
+			return;
+        }
+        
+        check=true;
+
+    })
+    
+    return check;
+    
+}
+
 
 //버튼 클릭 시 페이지 이동 공통 함수
 //request url(이동할 페이지)
