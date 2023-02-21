@@ -3,7 +3,7 @@
     <div>
     {{#post.id}}
      <form id="form-post">
-     	<input type="hidden" class="form-control" id="id" name="id" value="{{post.id}}" disabled>
+     	<input type="hidden" class="form-control" id="id" name="id" value="{{post.id}}">
         <div class="form-group">
             <label for="title">제목</label>
             <input type="text" class="form-control" id="title" name="title" value="{{post.title}}">
@@ -20,6 +20,8 @@
     <a href="/" role="button" class="btn btn-secondary">취소</a>
     <button type="button" class="btn btn-primary" id="btn-save" onClick="postForm('form-post','/post/update/{{id}}','PUT')">수정</button>    
     {{/post.id}}
+    
+    
     {{^post.id}}
      <form id="form-post">
         <div class="form-group">

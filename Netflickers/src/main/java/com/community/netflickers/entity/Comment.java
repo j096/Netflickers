@@ -15,50 +15,48 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostingHistory {
+public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private Long postId;
+	
 	private Long writer;
 	
-	private String title;
-	
 	private String content;
-	
-	private Long views;
 	
 	@Column(length=19)
 	private String createdDate;	
 	@Column(length=19)
 	private String modifiedDate;
-	@Column(length=19)
-	private String deletedDate;
+	
+	@Column(length=1)
+	private String deleteYn;
 	
 	@Builder
-	public PostingHistory(Long id, String title,Long writer, String content, Long views, String createdDate, String modifiedDate
-			,String deletedDate) {
+	public Comment(Long id, Long postId, Long writer, String content, String createdDate, String modifiedDate, String deletedDate, String deleteYn) {
 		
 		this.id = id;
-		
-		this.title = title;
-		
+		this.postId = postId;
 		this.writer = writer;
-		
 		this.content = content;
-		
-		this.views = views;
-
 		this.createdDate = createdDate;
-
 		this.modifiedDate = modifiedDate;
+		this.deleteYn = deleteYn;
 		
-		this.deletedDate = deletedDate;
-
 	}
 
-	public void setDeletedDate(String deletedDate) {
-		this.deletedDate = deletedDate;
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public void setDeleteYn(String deleteYn) {
+		this.deleteYn = deleteYn;
 	}
 
 }

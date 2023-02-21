@@ -1,13 +1,16 @@
 package com.community.netflickers.entity;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.annotations.ColumnDefault;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,14 +35,18 @@ public class Posting {
 	
 	private Long views;
 	
+	@Column(length=19)
 	private String createdDate;	
-	
+	@Column(length=19)
 	private String modifiedDate;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="postId")
+	private List<Comment> comments = new ArrayList<>();
 	
 	
 	@Builder
-	public Posting(Long id, String title,Long writer, String content, Long views, String createdDate, String modifiedDate
-			) {
+	public Posting(Long id, String title,Long writer, String content, Long views, String createdDate, String modifiedDate) {
 		
 		this.id = id;
 		
@@ -54,7 +61,7 @@ public class Posting {
 		this.createdDate = createdDate;
 
 		this.modifiedDate = modifiedDate;
-
+		
 	}
 	
 

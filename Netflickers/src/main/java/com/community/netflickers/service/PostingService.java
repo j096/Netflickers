@@ -29,9 +29,6 @@ public class PostingService {
 	@Autowired
 	PostingHistoryRepository postHistRepo;
 	
-	@Autowired
-	DateTimeGenerator dateTimeGenerator;
-	
 	@Transactional
 	public List<Posting> getPostList(){
 		return postRepo.findAll();
@@ -51,7 +48,8 @@ public class PostingService {
 
 	@Transactional
 	public Long savePost(PostingDto dto) {
-		dto.setCreatedDate(dateTimeGenerator.getNowDateTime());
+		dto.setCreatedDate(DateTimeGenerator.getNowDateTime());
+		dto.setModifiedDate(DateTimeGenerator.getNowDateTime());
 		dto.setViews((long)0);
 		
 		return postRepo.save(dto.toEntity()).getId();
@@ -65,7 +63,7 @@ public class PostingService {
 		Posting post = find.orElseThrow();
 		
 		post.setContent(dto.getContent());
-		post.setModifiedDate(dateTimeGenerator.getNowDateTime());
+		post.setModifiedDate(DateTimeGenerator.getNowDateTime());
 		post.setTitle(dto.getTitle());
 		
 		return post.getId();
@@ -79,7 +77,7 @@ public class PostingService {
 		Optional<Posting> find = postRepo.findById(id);
 		Posting post = find.orElseThrow();
 		
-		PostingHistory postHist = post.toHistory(dateTimeGenerator.getNowDateTime());
+		PostingHistory postHist = post.toHistory(DateTimeGenerator.getNowDateTime());
 		postHistRepo.save(postHist);
 		
 		//2. 기존 테이블에서 삭제

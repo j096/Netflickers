@@ -3,28 +3,67 @@
     <div>
      <form id="form-post">
      	<input type="hidden" class="form-control" id="id" name="id" value="{{post.id}}" disabled>
-     	<div class="form-group">
-     		작성일시: <input type="text" class="form-control" id="createdDate" value="{{post.createdDate}}" readonly>
-     		{{#post.modifiedDate}}
-     		수정일시: <input type="text" class="form-control" id="modifiedDate" value="{{post.modifiedDate}}" readonly>
-     		{{/post.modifiedDate}}
-     	</div>
-        <div class="form-group">
-            <label for="title">제목</label>
-            <input type="text" class="form-control" id="title" name="title" value="{{post.title}}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="writer">작성자</label>
-            <input type="text" class="form-control" id="writer" name="writer" value="{{post.writer}}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="content" class="form-label">내용</label>
-            <textarea class="form-control form-control-lg" id="content" name="content" readonly>{{post.content}}</textarea>
-        </div>
+        <table class="table table-horizontal table-bordered"> 
+        	<tr>
+        		<th colspan="6">{{post.title}}</th>
+        	</tr>
+	     	<tr>
+	     		<th>작성자</th>
+	     		<td>{{post.writer}}</td>
+	     		<th>작성일시</th>
+	     		<td>{{post.createdDate}}</td>
+	     		<th>수정일시</th>
+	     		<td>{{post.modifiedDate}}</td>
+	     	</tr>
+	     	<tr>
+	     		<td colspan="6"><div style="min-height:50%;">{{post.content}}</div></td>
+	     	</tr>
+     	</table>
     </form>
-    <button type="button" class="btn btn-primary" id="btn-save" onClick="goTo('/post/write/{{post.id}}')">수정</button>
-    <button type="button" class="btn btn-primary" id="btn-save" onClick="postForm('form-post','/post/delete/{{id}}','DELETE')">삭제</button>
-    
+    <div align="right">
+    	<button type="button" class="btn btn-danger" id="btn-post-save" onClick="postForm('form-post','/post/delete/{{id}}','DELETE')">삭제</button>
+    	<button type="button" class="btn btn-primary" id="btn-post-update" onClick="goTo('/post/write/{{post.id}}')">수정</button>
     </div>
+    </div>
+    &nbsp
+    <div>
+    	<form id="form-comment">
+     	<input type="hidden" class="form-control" id="id" name="postId" value="{{post.id}}">
+			<div class="form-group">
+              <label for="writer">작성자</label>
+              <input type="text" class="form-control" id="writer" name="writer" value="{{post.writer}}">
+       		</div>    	
+	        <div class="form-group">
+	          <textarea class="form-control form-control-lg" id="content" name="content" placeholder="댓글을 입력하세요"></textarea>
+	        </div>    	
+    	</form>
+		<div align="right">   
+	    	<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="postForm('form-comment','/comment/save','POST')">등록</button>
+	    </div>
+    </div>
+     &nbsp
+    
+  {{#post.comments}}
+  <div id="div-comment{{id}}">
+  	<input type="hidden" id="id" name="id" value="{{id}}">
+  	<input type="hidden"  id="writer" name="writer" value="{{writer}}">
+	<table class="table table-horizontal">
+		<tr>
+			<td style="width:70%">
+				<span id="content">{{content}}</span>
+			</td>
+			<td style="text-align:right">
+				<span id="modifiedDate">{{modifiedDate}}</span>
+			</td>
+			{{^deleteYn}}
+				<td style="width:150px;">
+	    			<button type="button" class="btn btn-danger" id="btn-comment-save" onClick="postForm('form-comment','/comment/delete/{{id}}','DELETE')">삭제</button>
+	    			<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="updateHtml('div-comment{{id}}')">수정</button>  
+				</td>
+			{{/deleteYn}}
+		</tr>
+	</table>
+	</div>
+  {{/post.comments}}
  {{>layout/footer}}
     

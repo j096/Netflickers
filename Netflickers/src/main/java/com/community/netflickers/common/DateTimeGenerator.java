@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DateTimeGenerator {
 	
-	public String getNowDateTime() {
+	public static String getNowDateTime() {
 		return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	}
 

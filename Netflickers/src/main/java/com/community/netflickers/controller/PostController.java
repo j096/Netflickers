@@ -78,7 +78,7 @@ public class PostController {
 		Message msg = new Message();
 		msg.setMessage("글이 삭제되었습니다.");
 		msg.setUrl("/post/list");
-		return new ResponseEntity(msg,HttpStatus.CREATED);
+		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 
 

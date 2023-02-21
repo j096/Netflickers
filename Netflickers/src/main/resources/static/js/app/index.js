@@ -49,3 +49,33 @@ function goTo(url){
 	window.location.href=url;
 }
 
+
+function updateHtml(id){
+	var commentId = $("#"+id+" #id").val();
+	var writer = $("#"+id+" #writer").val();
+	var content = $("#"+id+" #content").text();
+	
+	var origin = $("#"+id).html();
+	
+	var commentForm = '<div>'
+    	+'<form id="form-comment'+commentId+'">'
+			+'<div class="form-group">'
+              +'<label for="writer">작성자</label>'
+              +'<input type="text" class="form-control" id="writer" name="writer" value="'+writer+'" readonly>'
+       		+'</div>'    	
+	        +'<div class="form-group">'
+	          +'<textarea class="form-control form-control-lg" id="content" name="content" placeholder="댓글을 입력하세요">'+content+'</textarea>'
+	        +'</div>'    	
+    	+'</form>'
+		+'<div align="right">'
+	    	+'<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="postForm(\'form-comment'+commentId+'\',\'/comment/update/'+commentId+'\',\'PUT\')">등록</button>'
+	    +'</div>'
+    +'</div>';
+
+	$("#"+id).html(commentForm);
+}
+
+function resetHtml(id){
+	
+}
+
