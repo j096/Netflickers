@@ -21,6 +21,8 @@ public class CommentService {
 	public Long saveComment(CommentDto dto) {
 		
 		dto.setCreatedDate(DateTimeGenerator.getNowDateTime());
+		dto.setModifiedDate(DateTimeGenerator.getNowDateTime());
+
 		
 		return commentRepo.save(dto.toEntity()).getPostId();
 	}

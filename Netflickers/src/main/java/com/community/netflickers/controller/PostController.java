@@ -1,8 +1,10 @@
 package com.community.netflickers.controller;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class PostController {
 	
 	@Autowired
 	PostingService postService;
+	
+	@Autowired
+	private MessageSourceAccessor messageSource;
 	
 	@GetMapping("/list")
 	public String postings(Model model) {
@@ -57,8 +62,8 @@ public class PostController {
 	public ResponseEntity save(@RequestBody PostingDto dto) {
 		Long id = postService.savePost(dto);
 		Message msg = new Message();
-		msg.setMessage("글이 등록되었습니다.");
-		msg.setUrl("/post/read/"+id);
+		msg.setMessage(messageSource.getMessage("msg.post.save",Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {id},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -67,8 +72,8 @@ public class PostController {
 		dto.setId(id);
 		postService.updatePost(dto);
 		Message msg = new Message();
-		msg.setMessage("글이 등록되었습니다.");
-		msg.setUrl("/post/read/"+id);
+		msg.setMessage(messageSource.getMessage("msg.post.update",Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {id},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -76,8 +81,8 @@ public class PostController {
 	public ResponseEntity save(@PathVariable Long id) {
 		postService.deletePost(id);
 		Message msg = new Message();
-		msg.setMessage("글이 삭제되었습니다.");
-		msg.setUrl("/post/list");
+		msg.setMessage(messageSource.getMessage("msg.post.delete",Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.post.list",Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 

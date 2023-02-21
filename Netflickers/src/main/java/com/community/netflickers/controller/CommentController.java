@@ -1,6 +1,9 @@
 package com.community.netflickers.controller;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,12 +25,15 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 	
+	@Autowired
+	private MessageSourceAccessor messageSource;
+	
 	@PostMapping("/save")
 	public ResponseEntity save(@RequestBody CommentDto dto) {
 		Long postId = commentService.saveComment(dto);
 		Message msg = new Message();
-		msg.setMessage("댓글이 등록되었습니다.");
-		msg.setUrl("/post/read/"+postId);
+		msg.setMessage(messageSource.getMessage("msg.comment.save",Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -36,8 +42,8 @@ public class CommentController {
 		dto.setId(id);
 		Long postId = commentService.updateComment(dto);
 		Message msg = new Message();
-		msg.setMessage("댓글이 등록되었습니다.");
-		msg.setUrl("/post/read/"+postId);
+		msg.setMessage(messageSource.getMessage("msg.comment.update",Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -46,8 +52,8 @@ public class CommentController {
 	public ResponseEntity delete(@PathVariable Long id) {
 		Long postId = commentService.deletComment(id);
 		Message msg = new Message();
-		msg.setMessage("댓글이 삭제되었습니다.");
-		msg.setUrl("/post/read/"+postId);
+		msg.setMessage(messageSource.getMessage("msg.comment.delete"));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId}));
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 
