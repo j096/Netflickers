@@ -36,15 +36,15 @@ $.fn.serializeObject = function()
 //form 관련 저장/수정/삭제 리퀘스트 공통 함수
 //form id, request url, response msg, response href
 function postForm(formId, url, method, updateId){
-	
-	var check = validate(formId);
+	var check =true;
+	if(method !='DELETE')
+		check = validate(formId);
 	
 	if(check){
 		var data = $('#'+formId).serializeObject();
 		if(updateId)
 			$('#'+formId)[0].reset();
 			
-		
 		postRequest(url, data, method, updateId);
 	}
 }
