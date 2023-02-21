@@ -35,22 +35,15 @@ $.fn.serializeObject = function()
 
 //form 관련 저장/수정/삭제 리퀘스트 공통 함수
 //form id, request url, response msg, response href
-function postForm(formId, url, method){
+function postForm(formId, url, method, updateId){
 	
 	var data = $('#'+formId).serializeObject();
 	
-	postRequest(url, data, method);
-}
-
-function postUpdateForm(formId, updateId, url, method){
+	if(updateId)
+		$('#'+formId)[0].reset();
+		
 	
-	var data = $('#'+formId).serializeObject();
-	
-	$('#'+formId)[0].reset();
-	
-	dynamicUpdateRequest(url,data,method, updateId);
-	
-	
+	postRequest(url, data, method, updateId);
 }
 
 //버튼 클릭 시 페이지 이동 공통 함수
@@ -78,14 +71,10 @@ function updateToModifyForm(id){
 	        +'</div>'    	
     	+'</form>'
 		+'<div align="right">'
-	    	+'<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="postForm(\'form-comment'+commentId+'\',\'/comment/update/'+commentId+'\',\'PUT\')">등록</button>'
+	    	+'<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="postForm(\'form-comment'+commentId+'\',\'/comment/update/'+commentId+'\',\'PUT\',\'comment-list\')">등록</button>'
 	    +'</div>'
     +'</div>';
 
 	$("#"+id).html(commentForm);
-}
-
-function resetHtml(id){
-	
 }
 

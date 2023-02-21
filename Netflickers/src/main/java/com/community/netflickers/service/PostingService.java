@@ -1,7 +1,5 @@
 package com.community.netflickers.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +26,9 @@ public class PostingService {
 	
 	@Autowired
 	PostingHistoryRepository postHistRepo;
+	
+	@Autowired
+	CommentService commentService;
 	
 	@Transactional
 	public List<Posting> getPostList(){
@@ -81,6 +82,7 @@ public class PostingService {
 		
 		//2. 기존 테이블에서 삭제
 		postRepo.delete(post);
+		
 		
 		
 	}

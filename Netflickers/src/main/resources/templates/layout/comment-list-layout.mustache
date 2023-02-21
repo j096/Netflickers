@@ -12,7 +12,7 @@
 			</td>
 			{{^deleteYn}}
 				<td style="width:150px;">
-	    			<button type="button" class="btn btn-danger" id="btn-comment-save" onClick="postForm('form-comment','/comment/delete/{{id}}','DELETE')">삭제</button>
+	    			<button type="button" class="btn btn-danger" id="btn-comment-save" onClick="postForm('form-comment','/comment/delete/{{id}}','DELETE','comment-list')">삭제</button>
 	    			<button type="button" class="btn btn-primary" id="btn-comment-save" onClick="updateToModifyForm('div-comment{{id}}')">수정</button>  
 				</td>
 			{{/deleteYn}}

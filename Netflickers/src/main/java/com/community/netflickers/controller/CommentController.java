@@ -56,7 +56,7 @@ public class CommentController {
 		Long postId = commentService.updateComment(dto);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.update",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId},Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -66,7 +66,7 @@ public class CommentController {
 		Long postId = commentService.deletComment(id);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.delete",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {postId},Locale.KOREA));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId},Locale.KOREA));
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 
