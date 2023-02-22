@@ -1,7 +1,6 @@
 package com.community.netflickers.controller;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.community.netflickers.common.Message;
-import com.community.netflickers.entity.Comment;
 import com.community.netflickers.service.CommentService;
 import com.community.netflickers.service.dto.CommentDto;
 
@@ -34,7 +32,7 @@ public class CommentController {
 	
 	@GetMapping("/list/{postId}")
 	public String comments(@PathVariable Long postId, Model model) {
-		List<Comment> comments = commentService.getPostComments(postId);
+		List<CommentDto> comments = commentService.getPostComments(postId);
 		
 		model.addAttribute("comments",comments);
 		
@@ -45,8 +43,8 @@ public class CommentController {
 	public ResponseEntity save(@RequestBody CommentDto dto) {
 		Long postId = commentService.saveComment(dto);
 		Message msg = new Message();
-		msg.setMessage(messageSource.getMessage("msg.comment.save",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId},Locale.KOREA));
+		msg.setMessage(messageSource.getMessage("msg.comment.save"));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId}));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -55,8 +53,8 @@ public class CommentController {
 		dto.setId(id);
 		Long postId = commentService.updateComment(dto);
 		Message msg = new Message();
-		msg.setMessage(messageSource.getMessage("msg.comment.update",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId},Locale.KOREA));
+		msg.setMessage(messageSource.getMessage("msg.comment.update"));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId}));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -65,8 +63,8 @@ public class CommentController {
 	public ResponseEntity delete(@PathVariable Long id) {
 		Long postId = commentService.deletComment(id);
 		Message msg = new Message();
-		msg.setMessage(messageSource.getMessage("msg.comment.delete",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId},Locale.KOREA));
+		msg.setMessage(messageSource.getMessage("msg.comment.delete"));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId}));
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 

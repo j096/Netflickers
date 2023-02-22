@@ -3,8 +3,9 @@ package com.community.netflickers.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.community.netflickers.entity.auditing.BaseTimeEntity;
+
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Posting {
+public class Posting extends BaseTimeEntity{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,18 +37,13 @@ public class Posting {
 	
 	private Long views;
 	
-	@Column(length=19)
-	private String createdDate;	
-	@Column(length=19)
-	private String modifiedDate;
-	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinColumn(name="postId")
 	private List<Comment> comments = new ArrayList<>();
 	
 	
 	@Builder
-	public Posting(Long id, String title,Long writer, String content, Long views, String createdDate, String modifiedDate) {
+	public Posting(Long id, String title,Long writer, String content, Long views) {
 		
 		this.id = id;
 		
@@ -58,10 +54,6 @@ public class Posting {
 		this.content = content;
 		
 		this.views = views;
-
-		this.createdDate = createdDate;
-
-		this.modifiedDate = modifiedDate;
 		
 	}
 	
@@ -76,16 +68,11 @@ public class Posting {
 	}
 
 
-	public void setModifiedDate(String modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-	
-
 	public void setViews(Long views) {
 		this.views = views;
 	}
 	
-	public PostingHistory toHistory (String deletedDate) {
+	public PostingHistory toHistory () {
 		
 		return PostingHistory.builder()
 		.id(id)
@@ -93,9 +80,6 @@ public class Posting {
 		.writer(writer)
 		.content(content)
 		.views(views)
-		.createdDate(createdDate)
-		.modifiedDate(modifiedDate)
-		.deletedDate(deletedDate)
 		.build();
 
 	}

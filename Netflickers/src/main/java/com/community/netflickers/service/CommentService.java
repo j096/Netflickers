@@ -2,12 +2,12 @@ package com.community.netflickers.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.community.netflickers.common.DateTimeGenerator;
 import com.community.netflickers.entity.Comment;
 import com.community.netflickers.repository.CommentRepository;
 import com.community.netflickers.service.dto.CommentDto;
@@ -19,20 +19,14 @@ public class CommentService {
 	CommentRepository commentRepo;
 	
 	@Transactional
-	public List<Comment> getPostComments(Long postId) {
+	public List<CommentDto> getPostComments(Long postId) {
 		
-		List<Comment> comments = commentRepo.findByPostId(postId);
-		
-		return comments;
+		return commentRepo.findByPostId(postId).stream().map(CommentDto::new).collect(Collectors.toList());
 	}
 
 
 	@Transactional
 	public Long saveComment(CommentDto dto) {
-		
-		dto.setCreatedDate(DateTimeGenerator.getNowDateTime());
-		dto.setModifiedDate(DateTimeGenerator.getNowDateTime());
-
 		
 		return commentRepo.save(dto.toEntity()).getPostId();
 	}
@@ -43,8 +37,6 @@ public class CommentService {
 		Optional<Comment> find = commentRepo.findById(dto.getId());
 		
 		Comment comment = find.orElseThrow();
-		
-		comment.setModifiedDate(DateTimeGenerator.getNowDateTime());
 		comment.setContent(dto.getContent());
 		
 		return comment.getPostId();
@@ -57,7 +49,6 @@ public class CommentService {
 		Optional<Comment> find = commentRepo.findById(id);
 		
 		Comment comment = find.orElseThrow();
-		comment.setModifiedDate(DateTimeGenerator.getNowDateTime());
 		comment.setDeleteYn("Y");
 		comment.setContent("삭제된 댓글입니다.");
 		

@@ -1,16 +1,16 @@
 package com.community.netflickers.service.dto;
 
-import org.springframework.stereotype.Service;
-
 import com.community.netflickers.entity.Comment;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Service
 @Getter
 @Setter
-public class CommentDto {
+@NoArgsConstructor
+public class CommentDto extends BaseTimeDto{
 	
 	private Long id;
 	
@@ -20,11 +20,24 @@ public class CommentDto {
 	
 	private String content;
 	
-	private String createdDate;	
-	private String modifiedDate;
-	private String deletedDate;
-	
 	private String deleteYn;
+	
+	@Builder
+	public CommentDto(Comment comment) {
+		this.id = comment.getId();
+		
+		this.postId = comment.getPostId();
+		
+		this.writer = comment.getWriter();
+		
+		this.content = comment.getContent();
+		
+		this.deleteYn = comment.getDeleteYn();
+		
+		this.createdDate = toHhMmSsFormat(comment.getCreatedDate());
+		
+		this.modifiedDate = toHhMmSsFormat(comment.getModifiedDate());
+	}
 	
 	public Comment toEntity() {
 		return Comment.builder()
@@ -32,9 +45,6 @@ public class CommentDto {
 				.postId(postId)
 				.writer(writer)
 				.content(content)
-				.createdDate(createdDate)
-				.modifiedDate(modifiedDate)
-				.deletedDate(deletedDate)
 				.deleteYn(deleteYn)
 				.build();
 	}

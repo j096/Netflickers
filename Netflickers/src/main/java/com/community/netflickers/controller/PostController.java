@@ -34,14 +34,14 @@ public class PostController {
 	
 	@GetMapping("/list")
 	public String postings(Model model) {
-		List<Posting> postings = postService.getPostList();
+		List<PostingDto> postings = postService.getPostList();
 		model.addAttribute("postings", postings);
 		return "post-list";
 	}
 	
 	@GetMapping("/read/{id}")
 	public String read(@PathVariable Long id, Model model) {
-		Posting post = postService.getPostById(id);
+		PostingDto post = postService.getPostById(id);
 		model.addAttribute("post", post);
 		return "post-read";
 	}
@@ -53,7 +53,7 @@ public class PostController {
 	
 	@GetMapping("/write/{id}")
 	public String write(@PathVariable Long id, Model model) {
-		Posting post = postService.getPostById(id);
+		PostingDto post = postService.getPostById(id);
 		model.addAttribute("post", post);
 		return "post-write";
 	}
@@ -62,8 +62,8 @@ public class PostController {
 	public ResponseEntity save(@RequestBody PostingDto dto) {
 		Long id = postService.savePost(dto);
 		Message msg = new Message();
-		msg.setMessage(messageSource.getMessage("msg.post.save",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {id},Locale.KOREA));
+		msg.setMessage(messageSource.getMessage("msg.post.save"));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {id}));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -72,8 +72,8 @@ public class PostController {
 		dto.setId(id);
 		postService.updatePost(dto);
 		Message msg = new Message();
-		msg.setMessage(messageSource.getMessage("msg.post.update",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {id},Locale.KOREA));
+		msg.setMessage(messageSource.getMessage("msg.post.update"));
+		msg.setUrl(messageSource.getMessage("url.post.read", new Long[] {id}));
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -81,8 +81,8 @@ public class PostController {
 	public ResponseEntity save(@PathVariable Long id) {
 		postService.deletePost(id);
 		Message msg = new Message();
-		msg.setMessage(messageSource.getMessage("msg.post.delete",Locale.KOREA));
-		msg.setUrl(messageSource.getMessage("url.post.list",Locale.KOREA));
+		msg.setMessage(messageSource.getMessage("msg.post.delete"));
+		msg.setUrl(messageSource.getMessage("url.post.list"));
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 

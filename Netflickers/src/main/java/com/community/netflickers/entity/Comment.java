@@ -1,5 +1,9 @@
 package com.community.netflickers.entity;
 
+import org.springframework.context.annotation.Bean;
+
+import com.community.netflickers.entity.auditing.BaseTimeEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseTimeEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -26,33 +30,22 @@ public class Comment {
 	
 	private String content;
 	
-	@Column(length=19)
-	private String createdDate;	
-	@Column(length=19)
-	private String modifiedDate;
-	
 	@Column(length=1)
 	private String deleteYn;
 	
 	@Builder
-	public Comment(Long id, Long postId, Long writer, String content, String createdDate, String modifiedDate, String deletedDate, String deleteYn) {
+	public Comment(Long id, Long postId, Long writer, String content, String deleteYn) {
 		
 		this.id = id;
 		this.postId = postId;
 		this.writer = writer;
 		this.content = content;
-		this.createdDate = createdDate;
-		this.modifiedDate = modifiedDate;
 		this.deleteYn = deleteYn;
 		
 	}
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public void setModifiedDate(String modifiedDate) {
-		this.modifiedDate = modifiedDate;
 	}
 
 	public void setDeleteYn(String deleteYn) {

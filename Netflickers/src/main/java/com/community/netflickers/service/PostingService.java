@@ -2,6 +2,7 @@ package com.community.netflickers.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.community.netflickers.common.DateTimeGenerator;
 import com.community.netflickers.entity.Posting;
 import com.community.netflickers.entity.PostingHistory;
 import com.community.netflickers.repository.PostingHistoryRepository;
@@ -31,25 +31,23 @@ public class PostingService {
 	CommentService commentService;
 	
 	@Transactional
-	public List<Posting> getPostList(){
-		return postRepo.findAll();
+	public List<PostingDto> getPostList(){
+		return postRepo.findAll().stream().map(PostingDto::new).collect(Collectors.toList());
 	}
 	
 	@Transactional
-	public Posting getPostById(Long id) {
+	public PostingDto getPostById(Long id) {
 		
 		Optional<Posting> find = postRepo.findById(id);
 		Posting post =  find.orElseThrow();
 		post.setViews(post.getViews()+1);
 		
-		return post;
+		return new PostingDto(post);
 	}
 
 
 	@Transactional
 	public Long savePost(PostingDto dto) {
-		dto.setCreatedDate(DateTimeGenerator.getNowDateTime());
-		dto.setModifiedDate(DateTimeGenerator.getNowDateTime());
 		dto.setViews((long)0);
 		
 		return postRepo.save(dto.toEntity()).getId();
@@ -61,9 +59,7 @@ public class PostingService {
 		Optional<Posting> find = postRepo.findById(dto.getId());
 		
 		Posting post = find.orElseThrow();
-		
 		post.setContent(dto.getContent());
-		post.setModifiedDate(DateTimeGenerator.getNowDateTime());
 		post.setTitle(dto.getTitle());
 		
 		return post.getId();
@@ -77,7 +73,7 @@ public class PostingService {
 		Optional<Posting> find = postRepo.findById(id);
 		Posting post = find.orElseThrow();
 		
-		PostingHistory postHist = post.toHistory(DateTimeGenerator.getNowDateTime());
+		PostingHistory postHist = post.toHistory();
 		postHistRepo.save(postHist);
 		
 		//2. 기존 테이블에서 삭제
