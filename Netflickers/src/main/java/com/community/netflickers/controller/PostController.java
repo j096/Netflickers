@@ -1,10 +1,10 @@
 package com.community.netflickers.controller;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.community.netflickers.common.Message;
-import com.community.netflickers.entity.Posting;
+import com.community.netflickers.common.PageNumberGenerator;
 import com.community.netflickers.service.PostingService;
 import com.community.netflickers.service.dto.PostingDto;
 
@@ -33,9 +33,15 @@ public class PostController {
 	private MessageSourceAccessor messageSource;
 	
 	@GetMapping("/list")
-	public String postings(Model model) {
-		List<PostingDto> postings = postService.getPostList();
+	public String postings(Pageable pageable, Model model) {
+		List<PostingDto> postings = postService.getPostList(pageable);
+		
+		PageNumberGenerator pagingNumber = new PageNumberGenerator();
+		pagingNumber.CalNumberButton(postService.getTotalCount(), pageable.getPageSize(), pageable.getPageNumber());
+		
 		model.addAttribute("postings", postings);
+		model.addAttribute("paging", pagingNumber);
+		
 		return "post-list";
 	}
 	

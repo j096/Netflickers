@@ -1,5 +1,8 @@
   {{>layout/header}}
     <h1>게시판목록</h1>
+    <div class="text-end mb-8px">
+        <button type="button" class="btn btn-primary" onClick="goTo('/post/write')">글쓰기</button>
+    </div>
     <table class="table table-horizontal table-bordered table-hover">
     	<thead class="thead-strong">
     	<tr>
@@ -20,5 +23,5 @@
     	{{/postings}}
     	</tbody>
     </table>
-    <button type="button" class="btn btn-primary float-end" onClick="goTo('/post/write')">글쓰기</button>
+ {{>layout/pagination}}
  {{>layout/footer}}

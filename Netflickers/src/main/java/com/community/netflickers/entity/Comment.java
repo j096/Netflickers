@@ -1,7 +1,5 @@
 package com.community.netflickers.entity;
 
-import org.springframework.context.annotation.Bean;
-
 import com.community.netflickers.entity.auditing.BaseTimeEntity;
 
 import jakarta.persistence.Column;

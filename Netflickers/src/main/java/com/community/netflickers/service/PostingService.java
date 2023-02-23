@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +32,8 @@ public class PostingService {
 	CommentService commentService;
 	
 	@Transactional
-	public List<PostingDto> getPostList(){
-		return postRepo.findAll().stream().map(PostingDto::new).collect(Collectors.toList());
+	public List<PostingDto> getPostList(Pageable pageable){
+		return postRepo.findAll(pageable).stream().map(PostingDto::new).collect(Collectors.toList());
 	}
 	
 	@Transactional
@@ -81,6 +82,10 @@ public class PostingService {
 		
 		
 		
+	}
+
+	public long getTotalCount() {
+		return postRepo.count();
 	}
 
 }
