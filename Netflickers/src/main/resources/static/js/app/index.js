@@ -1,6 +1,3 @@
-document.write('<script type="text/javascript" src="/js/app/request.js"></script>');
-
-
 $.fn.serializeObject = function()
 
 {
@@ -35,7 +32,7 @@ $.fn.serializeObject = function()
 
 //form 관련 저장/수정/삭제 리퀘스트 공통 함수
 //form id, request url, response msg, response href
-function postForm(formId, url, method, updateId){
+function postForm(formId, url, method, updateId,callback){
 	var check =true;
 	if(method !='DELETE')
 		check = validate(formId);
@@ -45,7 +42,7 @@ function postForm(formId, url, method, updateId){
 		if(updateId)
 			$('#'+formId)[0].reset();
 			
-		postRequest(url, data, method, updateId);
+		postRequest(url, data, method, updateId,callback);
 	}
 }
 
@@ -115,7 +112,8 @@ function resetHtml(id){
 	$("#"+id).html(origin);
 }
 
-function loadHtml(id, url){
-	$('#'+id).load(url,set);
+function loadHtml(id, url, callback){
+	console.log("!!");
+	$('#'+id).load(url,callback);
 }
 

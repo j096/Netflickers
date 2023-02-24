@@ -60,7 +60,7 @@ function setPageNumHtml(){
 	var totalHtml = prev;	
 	for(var i=startNum;i<endNum;i++){
 		var num = i+1;
-		totalHtml += '<li class="page-item" id="page'+i+'"><a class="page-link" onClick="loadHtml(\'comment-list\',\''+url+'\')">'+num+'</a></li>';
+		totalHtml += '<li class="page-item" id="page'+i+'"><a class="page-link" onClick="loadHtml(\'comment-list\',\''+url+'\',\'set\')">'+num+'</a></li>';
 	}
 	totalHtml+= next;
 	$('#pagination').html(totalHtml);

@@ -1,4 +1,4 @@
-function postRequest(url, data, method, updateId){
+function postRequest(url, data, method, updateId,callback){
 	    $.ajax({
         type: method,
         url: url,
@@ -9,7 +9,7 @@ function postRequest(url, data, method, updateId){
 			200:function(result){
 				alert(result.message);
 				if(updateId){
-					$("#"+updateId).load(result.url);
+					loadHtml(updateId,result.url,callback);
 				}else{
 					window.location.href=result.url;
 				}				
@@ -17,7 +17,7 @@ function postRequest(url, data, method, updateId){
 			201:function(result){
 				alert(result.message);
 				if(updateId){
-					$("#"+updateId).load(result.url);
+					loadHtml(updateId,result.url,callback);
 				}else{
 					window.location.href=result.url;
 				}

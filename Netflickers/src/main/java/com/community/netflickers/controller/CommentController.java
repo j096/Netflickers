@@ -46,11 +46,11 @@ public class CommentController {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity save(@RequestBody CommentDto dto, Pageable pageable) {
+	public ResponseEntity save(@RequestBody CommentDto dto) {
 		Long postId = commentService.saveComment(dto);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.save"));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page="+pageable.getPageNumber()+"&size="+pageable.getPageSize());
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page=00&size=100");
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
