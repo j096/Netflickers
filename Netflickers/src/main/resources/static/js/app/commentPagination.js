@@ -42,6 +42,7 @@ function setNowPageNum(check){
 		offset = numberCount%offset;
 		
 	}else if(startNum > numberCount-(numberCount%offset)){
+		
 		return;
 
 	}
