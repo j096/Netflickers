@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.community.netflickers.common.Message;
 import com.community.netflickers.common.PageNumberGenerator;
+import com.community.netflickers.service.CommentService;
 import com.community.netflickers.service.PostingService;
 import com.community.netflickers.service.dto.PostingDto;
 
@@ -28,6 +29,9 @@ public class PostController {
 	
 	@Autowired
 	PostingService postService;
+	
+	@Autowired
+	CommentService commentService;
 	
 	@Autowired
 	private MessageSourceAccessor messageSource;
@@ -47,8 +51,14 @@ public class PostController {
 	
 	@GetMapping("/read/{id}")
 	public String read(@PathVariable Long id, Model model) {
+		
 		PostingDto post = postService.getPostById(id);
 		model.addAttribute("post", post);
+		
+		PageNumberGenerator pagingNumber = new PageNumberGenerator();
+		pagingNumber.CalNumberButton(commentService.getTotalCountByPostId(id),100,0);
+		model.addAttribute("commentPaging",pagingNumber);
+	
 		return "post-read";
 	}
 	

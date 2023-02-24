@@ -115,3 +115,7 @@ function resetHtml(id){
 	$("#"+id).html(origin);
 }
 
+function loadHtml(id, url){
+	$('#'+id).load(url,set);
+}
+

@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +20,10 @@ public class CommentService {
 	CommentRepository commentRepo;
 	
 	@Transactional
-	public List<CommentDto> getPostComments(Long postId) {
+	public List<CommentDto> getPostComments(Long postId, Pageable pageable) {
 		
-		return commentRepo.findByPostId(postId).stream().map(CommentDto::new).collect(Collectors.toList());
+		return commentRepo.findByPostId(postId, pageable)
+				.stream().map(CommentDto::new).collect(Collectors.toList());
 	}
 
 
@@ -55,5 +57,9 @@ public class CommentService {
 		return comment.getPostId();
 	}
 
+
+	public long getTotalCountByPostId(Long id) {
+		return commentRepo.getCountByPostId(id);
+	}
 
 }

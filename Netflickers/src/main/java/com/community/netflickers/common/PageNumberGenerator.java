@@ -22,8 +22,8 @@ public class PageNumberGenerator {
     	this.now = now;
     	this.numberCount = (this.totalCount == 0) ? 1 : (this.totalCount / this.size)+1;
     	
-    	if(this.numberCount < offset)
-    		offset = (int) numberCount;
+//    	if(this.numberCount < offset)
+//    		offset = (int) numberCount;
     }
     
 

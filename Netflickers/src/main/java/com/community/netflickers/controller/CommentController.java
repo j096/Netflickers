@@ -3,6 +3,7 @@ package com.community.netflickers.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.community.netflickers.common.Message;
+import com.community.netflickers.common.PageNumberGenerator;
 import com.community.netflickers.service.CommentService;
 import com.community.netflickers.service.dto.CommentDto;
 
@@ -31,40 +33,44 @@ public class CommentController {
 	private MessageSourceAccessor messageSource;
 	
 	@GetMapping("/list/{postId}")
-	public String comments(@PathVariable Long postId, Model model) {
-		List<CommentDto> comments = commentService.getPostComments(postId);
+	public String comments(@PathVariable Long postId, Pageable pageable, Model model) {
+		List<CommentDto> comments = commentService.getPostComments(postId, pageable);
 		
 		model.addAttribute("comments",comments);
+		
+		PageNumberGenerator pagingNumber = new PageNumberGenerator();
+		pagingNumber.CalNumberButton(commentService.getTotalCountByPostId(postId),pageable.getPageSize(), pageable.getPageNumber());
+		model.addAttribute("commentPaging",pagingNumber);
 		
 		return "layout/comment-list";
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity save(@RequestBody CommentDto dto) {
+	public ResponseEntity save(@RequestBody CommentDto dto, Pageable pageable) {
 		Long postId = commentService.saveComment(dto);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.save"));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId}));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page="+pageable.getPageNumber()+"&size="+pageable.getPageSize());
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity update(@PathVariable Long id, @RequestBody CommentDto dto) {
+	public ResponseEntity update(@PathVariable Long id, @RequestBody CommentDto dto, Pageable pageable) {
 		dto.setId(id);
 		Long postId = commentService.updateComment(dto);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.update"));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId}));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page="+pageable.getPageNumber()+"&size="+pageable.getPageSize());
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity delete(@PathVariable Long id) {
+	public ResponseEntity delete(@PathVariable Long id, Pageable pageable) {
 		Long postId = commentService.deletComment(id);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.delete"));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId}));
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page="+pageable.getPageNumber()+"&size="+pageable.getPageSize());
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 
