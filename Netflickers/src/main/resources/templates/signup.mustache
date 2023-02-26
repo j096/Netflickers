@@ -1,0 +1,38 @@
+ {{>layout/header}}
+ <main class="form-signin w-100 m-auto">
+	 <form class="class="needs-validation" id="signup-form" novalidate>
+	 	<div class="text-center">
+		 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+		 </div>
+		 <div class="form-floating">
+		 	<input type="id" class="form-control" id="loginId" name="loginId" placeholder="Id" required>
+		 	<label for="loginId">Id</label>
+	        <div class="invalid-feedback">
+	          아이디를 입력하세요
+	        </div>  		 	
+		 </div>
+		 <div class="form-floating">
+		  	<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+		 	<label for="password">Password</label>	
+	        <div class="invalid-feedback">
+	        비밀번호를 입력하세요
+	        </div>  			 	
+		 </div>
+		 <div class="form-floating">
+		  	<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+		 	<label for="email">Email</label>
+	        <div class="invalid-feedback">
+	        이메일 주소를 올바르게 입력하세요
+	        </div>
+	     </div>
+		 <div class="form-floating">
+		  	<input type="nickname" class="form-control" id="nickname" name="nickname" placeholder="Nickname" required>
+		 	<label for="nickname">Nickname</label>
+	        <div class="invalid-feedback">
+	        별명을 입력하세요
+	      </div> 	          			 		
+		</div>		 
+	 </form>
+	<button class="w-100 btn btn-lg btn-primary" type="button" onClick="postForm('signup-form','/member/signup','POST')">회원가입</button>	 
+ </main>
+ {{>layout/footer}}

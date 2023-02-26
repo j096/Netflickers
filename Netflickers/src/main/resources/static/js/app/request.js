@@ -5,24 +5,25 @@ function postRequest(url, data, method, updateId,callback){
         dataType: 'json',
         contentType: 'application/json; charset-utf-8',
         data: JSON.stringify(data),
-        statusCode:{
-			200:function(result){
+        success: function(result){
 				alert(result.message);
 				if(updateId){
 					loadHtml(updateId,result.url,callback);
 				}else{
-					window.location.href=result.url;
-				}				
-			},
-			201:function(result){
-				alert(result.message);
-				if(updateId){
-					loadHtml(updateId,result.url,callback);
-				}else{
-					window.location.href=result.url;
+						window.location.href=result.url;
 				}
-			}
+
+		},
+		error: function(jqXHR){
+			var msg = jqXHR.responseJSON.message;
+			var url = jqXHR.responseJSON.url;
+			alert(msg);
+			if(url)
+				window.location.href=result.url;
+				
 		}
+			
     }); 
 }
+
 
