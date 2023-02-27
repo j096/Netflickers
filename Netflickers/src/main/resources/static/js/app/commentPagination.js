@@ -46,7 +46,7 @@ function setPagingNum(){
 	
 	var totalHtml = prev;	
 	
-	for(var i=startNum;i<=endNum;i++){
+	for(var i=startNum;i<endNum;i++){
 		var num = i+1;
 		var query='?page='+i+'&startNum='+startNum+'&endNum='+endNum+'&now='+now;
 		totalHtml += '<li class="page-item" id="page'+i+'"><a class="page-link" onClick="loadHtml(\'commnet-list\',\'comment/list/'+postId+query+'\')">'+num+'</a></li>';
