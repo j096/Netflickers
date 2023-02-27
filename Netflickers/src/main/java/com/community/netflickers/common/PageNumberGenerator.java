@@ -26,8 +26,8 @@ public class PageNumberGenerator {
     	this.totalNumber = totalContent/pageSize;
     	this.endNum = startNum+numberOffset;
     	this.endNum = this.endNum > totalContent ? totalContent : this.endNum;
-    	if(now+1 < totalNumber) hasNext = true; else hasNext = false;
-    	if(now-1 < 0) hasPrev = false; else hasPrev = true;
+    	if(endNum+1 < totalNumber) hasNext = true; else hasNext = false;
+    	if(startNum-1 < 0) hasPrev = false; else hasPrev = true;
     	
     }
     
