@@ -3,8 +3,8 @@ package com.community.netflickers.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.community.netflickers.common.Message;
 import com.community.netflickers.common.PageNumberGenerator;
@@ -33,10 +34,16 @@ public class CommentController {
 	private MessageSourceAccessor messageSource;
 	
 	@GetMapping("/list/{postId}")
-	public String comments(@PathVariable Long postId, Pageable pageable, Model model) {
+	public String comments(@PathVariable Long postId, Pageable pageable, @RequestParam(required=false) PageNumberGenerator pageNumber, Model model) {
 		List<CommentDto> comments = commentService.getPostComments(postId, pageable);
 		
+		if(pageNumber == null)
+			pageNumber = new PageNumberGenerator();
+		
+		pageNumber.calNumberButton(commentService.getTotalCountByPostId(postId), pageable.getPageNumber(), pageable.getPageSize());
+		
 		model.addAttribute("comments",comments);
+		model.addAttribute("commentPaging",pageNumber);
 		
 		return "layout/comment-list";
 	}

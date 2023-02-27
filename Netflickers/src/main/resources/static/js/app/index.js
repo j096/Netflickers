@@ -113,7 +113,6 @@ function resetHtml(id){
 }
 
 function loadHtml(id, url, callback){
-	console.log("!!");
 	$('#'+id).load(url,callback);
 }
 

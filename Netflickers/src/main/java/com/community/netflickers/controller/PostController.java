@@ -58,14 +58,10 @@ public class PostController {
 	}
 	
 	@GetMapping("/read/{id}")
-	public String read(@PathVariable Long id, Model model) {
+	public String read(@PathVariable Long id, @RequestParam(required=false) PageNumberGenerator pageNumber, Model model) {
 		
 		PostingDto post = postService.getPostById(id);
 		model.addAttribute("post", post);
-		
-		PageNumberGenerator pagingNumber = new PageNumberGenerator();
-		pagingNumber.calNumberButton(commentService.getTotalCountByPostId(id),100,0);
-		model.addAttribute("commentPaging",pagingNumber);
 	
 		return "post-read";
 	}

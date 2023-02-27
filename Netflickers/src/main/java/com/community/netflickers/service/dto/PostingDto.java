@@ -25,7 +25,6 @@ public class PostingDto extends BaseTimeDto{
 	
 	private Long views;
 	
-	private List<CommentDto> comments;
 	
 	@Builder
 	public PostingDto(Posting posting) {
@@ -43,7 +42,7 @@ public class PostingDto extends BaseTimeDto{
 		
 		this.modifiedDate = toHhMmSsFormat(posting.getModifiedDate());
 		
-		this.comments = posting.getComments().stream().map(CommentDto::new).collect(Collectors.toList());
+//		this.comments = posting.getComments().stream().map(CommentDto::new).collect(Collectors.toList());
 		
 	}
 	

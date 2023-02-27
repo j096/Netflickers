@@ -37,7 +37,7 @@ public class Posting extends BaseTimeEntity{
 	
 	private Long views;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.REMOVE)
 	@JoinColumn(name="postId")
 	private List<Comment> comments = new ArrayList<>();
 	
