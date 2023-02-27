@@ -53,17 +53,17 @@ public class CommentController {
 		Long postId = commentService.saveComment(dto);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.save"));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page=00&size=100");
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page=0");
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity update(@PathVariable Long id, @RequestBody CommentDto dto, Pageable pageable) {
+	public ResponseEntity update(@PathVariable Long id, @RequestBody CommentDto dto) {
 		dto.setId(id);
 		Long postId = commentService.updateComment(dto);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.update"));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page="+pageable.getPageNumber()+"&size="+pageable.getPageSize());
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page=0");
 		return new ResponseEntity(msg,HttpStatus.CREATED);
 	}
 	
@@ -73,7 +73,7 @@ public class CommentController {
 		Long postId = commentService.deletComment(id);
 		Message msg = new Message();
 		msg.setMessage(messageSource.getMessage("msg.comment.delete"));
-		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page="+pageable.getPageNumber()+"&size="+pageable.getPageSize());
+		msg.setUrl(messageSource.getMessage("url.comment.list", new Long[] {postId})+"?page=0");
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 

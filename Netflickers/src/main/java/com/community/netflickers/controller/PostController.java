@@ -58,7 +58,7 @@ public class PostController {
 	}
 	
 	@GetMapping("/read/{id}")
-	public String read(@PathVariable Long id, @RequestParam(required=false) PageNumberGenerator pageNumber, Model model) {
+	public String read(@PathVariable Long id, Model model) {
 		
 		PostingDto post = postService.getPostById(id);
 		model.addAttribute("post", post);
