@@ -9,19 +9,25 @@ import lombok.Setter;
 @Data
 public class PageNumberGenerator {
 	
-    private long totalCount; // 게시글 총 갯수
-    private static int size;// 한 페이지당 게시글 수
-    private long numberCount;//필요한 총 페이지 번호 버튼 개수
-    private static int offset = 10;//한번에 보일 페이지 번호 버튼 개수
+    private static final int numberOffset = 10;//한번에 보일 페이지 번호 버튼 개수
+
+    private long totalContent; // 게시글 총 갯수
+    private long totalNumber;//필요한 총 페이지 번호 버튼 개수
+    private long startNum = 0;
+    private long endNum;
     private long now;
+    boolean hasNext, hasPrev;
     
-    public void CalNumberButton(long totalCount, int size, int now) {
-    	
-    	this.totalCount = totalCount;
-    	this.size = size;
+    
+    public void calNumberButton(long totalContent,long now, long pageSize){
+    	this.totalContent = totalContent;
     	this.now = now;
-    	this.numberCount = (this.totalCount == 0) ? 1 : (this.totalCount / this.size)+1;
+    	
+    	this.totalNumber = (long) Math.ceil((double)totalContent/pageSize);
+    	this.endNum = startNum+totalNumber-1;
+    	if(now+1 < totalNumber) hasNext = true; else hasNext = false;
+    	if(now-1 < 0) hasPrev = false; else hasPrev = true;
+    	
     }
     
-
 }

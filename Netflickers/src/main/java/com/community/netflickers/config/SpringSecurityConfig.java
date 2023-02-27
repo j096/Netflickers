@@ -24,23 +24,24 @@ public class SpringSecurityConfig {
             .authorizeHttpRequests((authz) -> {
 				try {
 					authz
-						.requestMatchers("/h2-console/**").permitAll()
-						.requestMatchers("/signup").permitAll()
-						.requestMatchers("/member/**").permitAll()
-						.requestMatchers("/post/list").permitAll()
-						.requestMatchers("/js/**").permitAll()
-						.requestMatchers("/css/**").permitAll()
-						.and()
-						.formLogin()
-						.loginPage("/login")
-						.loginProcessingUrl("/member/login")
-		                .defaultSuccessUrl("/",true)
-		                .permitAll()
-		                .and()
-		                .logout()
-		                .logoutUrl("/member/logout")
-		                .logoutSuccessUrl("/login")
-		                .permitAll();
+					.anyRequest().permitAll();
+//						.requestMatchers("/h2-console/**").permitAll()
+//						.requestMatchers("/signup").permitAll()
+//						.requestMatchers("/member/**").permitAll()
+//						.requestMatchers("/post/list").permitAll()
+//						.requestMatchers("/js/**").permitAll()
+//						.requestMatchers("/css/**").permitAll()
+//						.and()
+//						.formLogin()
+//						.loginPage("/login")
+//						.loginProcessingUrl("/member/login")
+//		                .defaultSuccessUrl("/",true)
+//		                .permitAll()
+//		                .and()
+//		                .logout()
+//		                .logoutUrl("/member/logout")
+//		                .logoutSuccessUrl("/login")
+//		                .permitAll();
 						
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

@@ -2,6 +2,8 @@ package com.community.netflickers.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.community.netflickers.common.Message;
 import com.community.netflickers.common.PageNumberGenerator;
@@ -36,15 +39,20 @@ public class PostController {
 	@Autowired
 	private MessageSourceAccessor messageSource;
 	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass()); 
+	
 	@GetMapping("/list")
-	public String postings(Pageable pageable, Model model) {
+	public String postings(Pageable pageable, @RequestParam(required=false) PageNumberGenerator pageNumber, Model model) {
 		List<PostingDto> postings = postService.getPostList(pageable);
 		
-		PageNumberGenerator pagingNumber = new PageNumberGenerator();
-		pagingNumber.CalNumberButton(postService.getTotalCount(), pageable.getPageSize(), pageable.getPageNumber());
+		if(pageNumber == null)
+			pageNumber = new PageNumberGenerator();
+		
+		pageNumber.calNumberButton(postService.getTotalCount(), pageable.getPageNumber(), pageable.getPageSize());
 		
 		model.addAttribute("postings", postings);
-		model.addAttribute("paging", pagingNumber);
+		model.addAttribute("paging", pageNumber);
+		
 		
 		return "post-list";
 	}
@@ -56,7 +64,7 @@ public class PostController {
 		model.addAttribute("post", post);
 		
 		PageNumberGenerator pagingNumber = new PageNumberGenerator();
-		pagingNumber.CalNumberButton(commentService.getTotalCountByPostId(id),100,0);
+		pagingNumber.calNumberButton(commentService.getTotalCountByPostId(id),100,0);
 		model.addAttribute("commentPaging",pagingNumber);
 	
 		return "post-read";

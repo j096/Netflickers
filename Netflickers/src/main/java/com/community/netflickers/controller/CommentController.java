@@ -38,10 +38,6 @@ public class CommentController {
 		
 		model.addAttribute("comments",comments);
 		
-		PageNumberGenerator pagingNumber = new PageNumberGenerator();
-		pagingNumber.CalNumberButton(commentService.getTotalCountByPostId(postId),pageable.getPageSize(), pageable.getPageNumber());
-		model.addAttribute("commentPaging",pagingNumber);
-		
 		return "layout/comment-list";
 	}
 	
