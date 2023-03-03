@@ -1,7 +1,7 @@
 # Netflickers
 Spring boot Data Jpa 를 이용한 영화 리뷰 커뮤니티
 
-## Technicla Stacks
+## Technical Stacks
 <ul>
   <li>Java 17</li>
   <li>SpringToolSuite4 (v4.17.2)</li>
