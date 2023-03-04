@@ -1,21 +1,19 @@
 package com.community.netflickers.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-
-import com.community.netflickers.service.MemberDetail;
-import com.community.netflickers.service.MemberDetailService;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 @Configuration
 public class SpringSecurityConfig {
+	
+	@Autowired
+	private SimpleUrlAuthenticationFailureHandler loginFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -24,24 +22,26 @@ public class SpringSecurityConfig {
             .authorizeHttpRequests((authz) -> {
 				try {
 					authz
-					.anyRequest().permitAll();
-//						.requestMatchers("/h2-console/**").permitAll()
-//						.requestMatchers("/signup").permitAll()
-//						.requestMatchers("/member/**").permitAll()
-//						.requestMatchers("/post/list").permitAll()
-//						.requestMatchers("/js/**").permitAll()
-//						.requestMatchers("/css/**").permitAll()
-//						.and()
-//						.formLogin()
-//						.loginPage("/login")
-//						.loginProcessingUrl("/member/login")
-//		                .defaultSuccessUrl("/",true)
-//		                .permitAll()
-//		                .and()
-//		                .logout()
-//		                .logoutUrl("/member/logout")
-//		                .logoutSuccessUrl("/login")
-//		                .permitAll();
+//					.anyRequest().permitAll();
+						.requestMatchers("/h2-console/**").permitAll()
+						.requestMatchers("/signup").permitAll()
+						.requestMatchers("/member/**").permitAll()
+						.requestMatchers("/post/list").permitAll()
+						.requestMatchers("/js/**").permitAll()
+						.requestMatchers("/css/**").permitAll()
+						.requestMatchers("/post/read/**").authenticated()
+						.and()
+						.formLogin()
+						.loginPage("/login")
+						.loginProcessingUrl("/member/login")
+		                .defaultSuccessUrl("/post/list",true)
+		                .failureHandler(loginFailureHandler)
+		                .permitAll()
+		                .and()
+		                .logout()
+		                .logoutUrl("/member/logout")
+		                .logoutSuccessUrl("/login")
+		                .permitAll();
 						
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -53,7 +53,7 @@ public class SpringSecurityConfig {
     }
     
     @Bean
-    public BCryptPasswordEncoder encodePassword() {  // 회원가입 시 비밀번호 암호화에 사용할 Encoder 빈 등록
+    public PasswordEncoder encoder() {  // 회원가입 시 비밀번호 암호화에 사용할 Encoder 빈 등록
         return new BCryptPasswordEncoder();
     }
     

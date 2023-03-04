@@ -31,9 +31,6 @@ public class MemberDto extends BaseTimeDto{
     
     private String email;
     
-    @Autowired
-    private static PasswordEncoder encoder = new BCryptPasswordEncoder();
-    
     @Builder
     public MemberDto(Member member) {
 		
@@ -62,9 +59,9 @@ public class MemberDto extends BaseTimeDto{
 				.build();
 				
 	}
-	
-	public void encrytpPassword() {
+
+	public void encrytpPassword(PasswordEncoder encoder) {
 		this.password = encoder.encode(this.password);
 	}
-
+	
 }

@@ -40,9 +40,9 @@ public class Member extends BaseTimeEntity{
     @Column
     private String email;
     
-    @OneToMany
-    @JoinColumn(name="memberId")
-    List<Role> roles = new ArrayList<Role>();
+//    @OneToMany
+//    @JoinColumn(name="memberId")
+//    List<Role> roles = new ArrayList<Role>();
     
 	@Builder
 	public Member(Long id, String loginId , String password, String nickname, String email) {

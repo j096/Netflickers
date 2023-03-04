@@ -21,16 +21,18 @@ public class MemberDetail implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<GrantedAuthority> auths = new ArrayList<>();
-        for(Role role : member.getRoles()){
-            auths.add(new GrantedAuthority() {
-                @Override
-                public String getAuthority() {
-                    return role.getRoleName();
-                }
-            });
-        }
-        return auths;
+		
+		return null;
+//        ArrayList<GrantedAuthority> auths = new ArrayList<>();
+//        for(Role role : member.getRoles()){
+//            auths.add(new GrantedAuthority() {
+//                @Override
+//                public String getAuthority() {
+//                    return role.getRoleName();
+//                }
+//            });
+//        }
+//        return auths;
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class MemberDetail implements UserDetails{
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

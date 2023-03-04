@@ -24,9 +24,20 @@ public class MemberController {
 	@Autowired
 	private MessageSourceAccessor messageSource;
 	
-//	@GetMapping("/login")
-//	public String memberLogin(@RequestBody MemberDto dto) {
-//		memberService.loadUserByUsername(dto.getLoginId());
+//	@PostMapping("/login")
+//	public ResponseEntity memberLogin(@RequestBody MemberDto dto) {
+//		boolean check = memberService.checkMember(dto);
+//		Message msg = new Message();
+//		if(check) {
+//			msg.setMessage(messageSource.getMessage("msg.signin.success"));
+//			msg.setUrl(messageSource.getMessage("url.post.list"));
+//			return new ResponseEntity(msg,HttpStatus.OK);
+//		}
+//		else {
+//			msg.setMessage(messageSource.getMessage("msg.signin.fail"));
+//			return new ResponseEntity(msg,HttpStatus.NOT_ACCEPTABLE);
+//		}
+//		
 //	}
 	
 	@PostMapping("/signup")

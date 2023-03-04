@@ -15,11 +15,13 @@ function postRequest(url, data, method, updateId,callback){
 
 		},
 		error: function(jqXHR){
-			var msg = jqXHR.responseJSON.message;
-			var url = jqXHR.responseJSON.url;
-			alert(msg);
-			if(url)
-				window.location.href=result.url;
+		console.log(jqXHR);
+//			if(jqXHR.responseJSON.message)
+//			var msg = jqXHR.responseJSON.message;
+//			var url = jqXHR.responseJSON.url;
+//			alert(msg);
+//			if(url)
+//				window.location.href=result.url;
 				
 		}
 			
