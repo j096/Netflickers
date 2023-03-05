@@ -4,23 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-/*https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter*/
 @Configuration
 public class SpringSecurityConfig {
 	
 	@Autowired
 	private SimpleUrlAuthenticationFailureHandler loginFailureHandler;
-	
-	private static String[] permitUrl = {"/signup","/post/list","/post/read/**","/member/**","/comment/list/**"};
-	private static String[] authUrl = {"/post/write/**","/post/save/**","/post/update/**","/post/delete/**"
-			,"/comment/save","/comment/update/**","/comment/delete/**"};
-	private static String[] ignoreUrl = {"/h2-console/**","/js/**","/css/**","/favicon.ico"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -29,12 +22,18 @@ public class SpringSecurityConfig {
             .authorizeHttpRequests((authz) -> {
 				try {
 					authz
-						.requestMatchers(permitUrl).permitAll()
-						.requestMatchers(authUrl).authenticated()
+//					.anyRequest().permitAll();
+						.requestMatchers("/h2-console/**").permitAll()
+						.requestMatchers("/signup").permitAll()
+						.requestMatchers("/member/**").permitAll()
+						.requestMatchers("/post/list").permitAll()
+						.requestMatchers("/js/**").permitAll()
+						.requestMatchers("/css/**").permitAll()
+						.requestMatchers("/post/read/**").authenticated()
 						.and()
 						.formLogin()
 						.loginPage("/login")
-						.loginProcessingUrl("/login")
+						.loginProcessingUrl("/member/login")
 		                .defaultSuccessUrl("/post/list",true)
 		                .failureHandler(loginFailureHandler)
 		                .permitAll()
@@ -54,13 +53,7 @@ public class SpringSecurityConfig {
     }
     
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-    		//정적파일 및 테스트 db 콘솔 무시
-        return (web) -> web.ignoring().requestMatchers(ignoreUrl);
-    }
-    
-    @Bean
-    public PasswordEncoder encoder() {  // 회원가입 및 로그인 시 비밀번호 암호화에 사용할 Encoder 빈 등록
+    public PasswordEncoder encoder() {  // 회원가입 시 비밀번호 암호화에 사용할 Encoder 빈 등록
         return new BCryptPasswordEncoder();
     }
     
