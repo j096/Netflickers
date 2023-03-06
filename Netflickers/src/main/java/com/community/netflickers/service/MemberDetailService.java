@@ -61,4 +61,10 @@ public class MemberDetailService implements UserDetailsService{
 		return false;
 	}
 
+	public String findloginIdByEmail(String email) {
+		
+		String loginId = memRepo.findLoginIdByEmail(email);
+		return loginId;
+	}
+
 }
