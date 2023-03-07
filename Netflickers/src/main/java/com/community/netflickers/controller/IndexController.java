@@ -27,4 +27,9 @@ public class IndexController {
 	public String signupPage() {
 		return "signup";
 	}
+	
+	@GetMapping("/id-find")
+	public String idFindPage() {
+		return "id-find";
+	}
 }

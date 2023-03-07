@@ -3,6 +3,7 @@ package com.community.netflickers.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +18,8 @@ public class SpringSecurityConfig {
 	@Autowired
 	private SimpleUrlAuthenticationFailureHandler loginFailureHandler;
 	
-	private static String[] permitUrl = {"/signup","/post/list","/post/read/**","/member/**","/comment/list/**"};
+	// permitUrl 순서 중요 (리퀘스트 흐름상 먼저 오는 것이 먼저 기술되어야 한다.)
+	private static String[] permitUrl = {"/signup","/id-find","/member/**","/post/list","/post/read/**","/comment/list/**"};
 	private static String[] authUrl = {"/post/write/**","/post/save/**","/post/update/**","/post/delete/**"
 			,"/comment/save","/comment/update/**","/comment/delete/**"};
 	private static String[] ignoreUrl = {"/h2-console/**","/js/**","/css/**","/favicon.ico"};

@@ -10,19 +10,21 @@ function postRequest(url, data, method, updateId,callback){
 				if(updateId){
 					loadHtml(updateId,result.url,callback);
 				}else{
-						window.location.href=result.url;
+					window.location.href=result.url;
 				}
 
 		},
 		error: function(jqXHR){
-		console.log(jqXHR);
-//			if(jqXHR.responseJSON.message)
-//			var msg = jqXHR.responseJSON.message;
-//			var url = jqXHR.responseJSON.url;
-//			alert(msg);
-//			if(url)
-//				window.location.href=result.url;
-				
+			console.log(jqXHR);
+			if(jqXHR.responseJSON.message){
+				var msg = jqXHR.responseJSON.message;
+				alert(msg);
+			}
+			if(jqXHR.responseJSON.url){
+				var url = jqXHR.responseJSON.url;
+				window.location.href=result.url;
+			}
+			
 		}
 			
     }); 

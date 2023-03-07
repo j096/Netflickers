@@ -39,17 +39,21 @@ public class MemberDetailService implements UserDetailsService{
 	}
 
 	@Transactional
-	public boolean signup(MemberDto dto) {
+	public int signup(MemberDto dto) {
 		Long exists = memRepo.existsByLoginId(dto.getLoginId());
-		
 		if(exists > 0)
-			return false;
+			return -1;
+		
+		String email = memRepo.findLoginIdByEmail(dto.getEmail());
+		
+		if(email != null)
+			return -2;
 		
 		dto.setPassword(encoder.encode(dto.getPassword()));
 		Member member = dto.toEntity();
 		
 		memRepo.save(member);
-		return true;
+		return 1;
 	}
 
 	public boolean checkMember(MemberDto dto) {

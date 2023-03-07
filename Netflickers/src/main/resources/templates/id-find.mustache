@@ -1,0 +1,17 @@
+{{>layout/header}}
+ <main class="form-signin w-100 m-auto">
+<form id="form-id-find">
+	<div class="text-center">
+	 	<h1 class="h3 mb-3 fw-normal">아이디 찾기</h1>
+	 	<h1 class="h6 mb-3 fw-normal">가입 시 등록한 이메일 주소로 아이디를 찾아주세요.</h1>
+	 </div>
+	 <div class="form-floating">
+	 	<input type="text" class="form-control mb-10px" id="email" name="email" placeholder="email">
+	 	<label for="email">이메일</label>
+	 </div>
+</form>
+<button class="w-100 mb-1 btn btn-lg btn-primary" onClick="postForm('form-id-find','/member/find','POST')">아이디 찾기</button>  
+
+</main>
+
+{{>layout/footer}}

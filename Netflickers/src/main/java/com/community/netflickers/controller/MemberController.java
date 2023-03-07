@@ -26,45 +26,39 @@ public class MemberController {
 	@Autowired
 	private MessageSourceAccessor messageSource;
 	
-//	@PostMapping("/login")
-//	public ResponseEntity memberLogin(@RequestBody MemberDto dto) {
-//		boolean check = memberService.checkMember(dto);
-//		Message msg = new Message();
-//		if(check) {
-//			msg.setMessage(messageSource.getMessage("msg.signin.success"));
-//			msg.setUrl(messageSource.getMessage("url.post.list"));
-//			return new ResponseEntity(msg,HttpStatus.OK);
-//		}
-//		else {
-//			msg.setMessage(messageSource.getMessage("msg.signin.fail"));
-//			return new ResponseEntity(msg,HttpStatus.NOT_ACCEPTABLE);
-//		}
-//		
-//	}
-	
 	@PostMapping("/signup")
 	public ResponseEntity signup(@RequestBody MemberDto dto) {
 		
-		boolean isSaved = memberService.signup(dto);
+		int isSaved = memberService.signup(dto);
 		
 		Message msg = new Message();
-		if(isSaved) {
+		if(isSaved==1) {
 			msg.setMessage(messageSource.getMessage("msg.signup.success"));
 			msg.setUrl(messageSource.getMessage("url.login"));
 			return new ResponseEntity(msg,HttpStatus.CREATED);
-		}else {//아이디중복
-			msg.setMessage(messageSource.getMessage("msg.signup.fail"));
+		}else {
+			if(isSaved == -1)//아이디중복
+				msg.setMessage(messageSource.getMessage("msg.signup.fail.id"));
+			else if(isSaved == -2)//이메일중복
+				msg.setMessage(messageSource.getMessage("msg.signup.fail.email"));
+			
 			return new ResponseEntity(msg,HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 	}
 	
 	@PostMapping("/find")
-	public String findLoginIdByEmail(@RequestBody MemberDto dto, Model model) {
+	public ResponseEntity findLoginIdByEmail(@RequestBody MemberDto dto) {
 		String loginId = memberService.findloginIdByEmail(dto.getEmail());
 		
-		model.addAttribute("loginId", loginId);
-		return "id-find";
+		Message msg = new Message();
+
+		if(loginId == null)
+			msg.setMessage("회원 정보가 존재하지 않습니다.");
+		else
+			msg.setMessage(messageSource.getMessage("msg.id.find.result",new String[] {loginId}));
+	
+		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 	
 }
