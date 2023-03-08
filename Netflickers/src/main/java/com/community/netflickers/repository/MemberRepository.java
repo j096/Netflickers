@@ -1,5 +1,7 @@
 package com.community.netflickers.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +18,8 @@ public interface MemberRepository extends JpaRepository<Member,Long>{
 	
 	@Query(value="select m.loginId from Member m where m.email = :email")
 	String findLoginIdByEmail(@Param("email") String email);
+
+	@Query(value="select m from Member m where m.loginId = :loginId and m.email = :email")
+	Optional<Member> findByLoginIdAndEmail(@Param("loginId") String loginId, @Param("email") String email);
 
 }

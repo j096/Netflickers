@@ -1,5 +1,8 @@
 package com.community.netflickers.service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,19 +59,26 @@ public class MemberDetailService implements UserDetailsService{
 		return 1;
 	}
 
-	public boolean checkMember(MemberDto dto) {
-		UserDetails member = loadUserByUsername(dto.getLoginId());
-		
-		if(encoder.matches(dto.getPassword(), member.getPassword()))
-				return true;
-		
-		return false;
-	}
-
+	@Transactional
 	public String findloginIdByEmail(String email) {
 		
 		String loginId = memRepo.findLoginIdByEmail(email);
 		return loginId;
+	}
+
+	@Transactional
+	public boolean chagePassword(MemberDto dto){
+		
+		Optional<Member> find = memRepo.findByLoginIdAndEmail(dto.getLoginId(),dto.getEmail());
+		Member member;
+		try {
+			member = find.orElseThrow();
+		}catch(NoSuchElementException e){
+			logger.error(e.toString());
+			return false;
+		}
+		member.setPassword(encoder.encode(dto.getPassword()));
+		return true;
 	}
 
 }

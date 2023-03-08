@@ -61,4 +61,21 @@ public class MemberController {
 		return new ResponseEntity(msg,HttpStatus.OK);
 	}
 	
+	@PostMapping("/password")
+	public ResponseEntity changePassword(@RequestBody MemberDto dto){
+		
+		boolean isSaved = memberService.chagePassword(dto);
+		Message msg = new Message();
+		if(isSaved) {
+			msg.setMessage(messageSource.getMessage("msg.password.change.success"));
+			msg.setUrl(messageSource.getMessage("url.login"));
+		}else {
+			msg.setMessage(messageSource.getMessage("msg.password.change.fail"));
+			msg.setMessage(messageSource.getMessage("url.change.password"));
+		}
+		
+		return new ResponseEntity(msg,HttpStatus.CREATED);
+			
+	}
+	
 }
