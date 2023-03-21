@@ -1,5 +1,6 @@
 package com.community.netflickers.entity;
 
+import com.community.netflickers.entity.auditing.BaseEntity;
 import com.community.netflickers.entity.auditing.BaseTimeEntity;
 
 import jakarta.persistence.Column;
@@ -17,14 +18,13 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment extends BaseTimeEntity{
+public class Comment extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private Long postId;
 	
-	private Long writer;
 	
 	private String content;
 	
@@ -32,11 +32,10 @@ public class Comment extends BaseTimeEntity{
 	private String deleteYn;
 	
 	@Builder
-	public Comment(Long id, Long postId, Long writer, String content, String deleteYn) {
+	public Comment(Long id, Long postId, String content, String deleteYn) {
 		
 		this.id = id;
 		this.postId = postId;
-		this.writer = writer;
 		this.content = content;
 		this.deleteYn = deleteYn;
 		

@@ -17,7 +17,7 @@ public class PostingDto extends BaseTimeDto{
 	
 	private Long id;
 	
-	private Long writer;
+	private String writer;
 	
 	private String title;
 	
@@ -30,8 +30,6 @@ public class PostingDto extends BaseTimeDto{
 	public PostingDto(Posting posting) {
 		this.id=posting.getId();
 	
-		this.writer=posting.getWriter();
-		
 		this.title=posting.getTitle();
 		
 		this.content=posting.getContent();
@@ -51,7 +49,6 @@ public class PostingDto extends BaseTimeDto{
 	public Posting toEntity() {
 		return Posting.builder()
 				.id(id)
-				.writer(writer)
 				.title(title)
 				.content(content)
 				.views(views)

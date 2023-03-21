@@ -3,11 +3,10 @@ package com.community.netflickers.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.community.netflickers.entity.auditing.BaseTimeEntity;
+import com.community.netflickers.entity.auditing.BaseEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,13 +22,12 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Posting extends BaseTimeEntity{
+public class Posting extends BaseEntity{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Long writer;
 	
 	private String title;
 	
@@ -43,13 +41,11 @@ public class Posting extends BaseTimeEntity{
 	
 	
 	@Builder
-	public Posting(Long id, String title,Long writer, String content, Long views) {
+	public Posting(Long id, String title, String content, Long views) {
 		
 		this.id = id;
 		
 		this.title = title;
-		
-		this.writer = writer;
 		
 		this.content = content;
 		
@@ -77,7 +73,6 @@ public class Posting extends BaseTimeEntity{
 		return PostingHistory.builder()
 		.id(id)
 		.title(title)
-		.writer(writer)
 		.content(content)
 		.views(views)
 		.build();

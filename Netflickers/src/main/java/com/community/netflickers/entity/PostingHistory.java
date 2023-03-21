@@ -1,8 +1,7 @@
 package com.community.netflickers.entity;
 
-import com.community.netflickers.entity.auditing.BaseTimeEntity;
+import com.community.netflickers.entity.auditing.BaseEntity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,12 +16,10 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostingHistory extends BaseTimeEntity{
+public class PostingHistory extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private Long writer;
 	
 	private String title;
 	
@@ -31,13 +28,11 @@ public class PostingHistory extends BaseTimeEntity{
 	private Long views;
 	
 	@Builder
-	public PostingHistory(Long id, String title,Long writer, String content, Long views) {
+	public PostingHistory(Long id, String title, String content, Long views) {
 		
 		this.id = id;
 		
 		this.title = title;
-		
-		this.writer = writer;
 		
 		this.content = content;
 		

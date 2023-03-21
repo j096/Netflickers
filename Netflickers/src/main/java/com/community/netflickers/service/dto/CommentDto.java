@@ -16,7 +16,7 @@ public class CommentDto extends BaseTimeDto{
 	
 	private Long postId;
 	
-	private Long writer;
+	private String writer;
 	
 	private String content;
 	
@@ -27,8 +27,6 @@ public class CommentDto extends BaseTimeDto{
 		this.id = comment.getId();
 		
 		this.postId = comment.getPostId();
-		
-		this.writer = comment.getWriter();
 		
 		this.content = comment.getContent();
 		
@@ -43,7 +41,6 @@ public class CommentDto extends BaseTimeDto{
 		return Comment.builder()
 				.id(id)
 				.postId(postId)
-				.writer(writer)
 				.content(content)
 				.deleteYn(deleteYn)
 				.build();

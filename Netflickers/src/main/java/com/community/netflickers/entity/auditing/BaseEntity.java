@@ -1,9 +1,6 @@
 package com.community.netflickers.entity.auditing;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
@@ -14,13 +11,10 @@ import lombok.Getter;
 @EntityListeners(AuditingEntityListener.class)//엔티티 db 적용 전,후로 콜백 적용
 @MappedSuperclass
 @Getter
-public abstract class BaseTimeEntity {
-	@CreatedDate
-	@Column(updatable = false)//임의 수정 막음
-	private LocalDateTime createdDate;
-	
-	@LastModifiedDate
-	@Column(updatable = false)
-	private LocalDateTime modifiedDate;
+public abstract class BaseEntity extends BaseTimeEntity{
 
+	@CreatedBy
+	@Column(updatable = false)
+	private String writer;
+	
 }
