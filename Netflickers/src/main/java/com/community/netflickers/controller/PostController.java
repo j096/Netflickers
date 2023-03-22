@@ -42,8 +42,8 @@ public class PostController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass()); 
 	
 	@GetMapping("/list")
-	public String postings(Pageable pageable, @RequestParam(required=false) PageNumberGenerator pageNumber, Model model) {
-		List<PostingDto> postings = postService.getPostList(pageable);
+	public String postings(Pageable pageable, @RequestParam(required=false) PageNumberGenerator pageNumber,@RequestParam(required=false) String categoryId, Model model) {
+		List<PostingDto> postings = postService.getPostList(pageable,categoryId);
 		
 		if(pageNumber == null)
 			pageNumber = new PageNumberGenerator();

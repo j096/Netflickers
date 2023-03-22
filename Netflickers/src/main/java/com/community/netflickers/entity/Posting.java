@@ -28,12 +28,13 @@ public class Posting extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
 	private String title;
 	
 	private String content;
 	
 	private Long views;
+	
+	private Long categoryId;
 	
 	@OneToMany(cascade = CascadeType.REMOVE)
 	@JoinColumn(name="postId")
@@ -41,7 +42,7 @@ public class Posting extends BaseEntity{
 	
 	
 	@Builder
-	public Posting(Long id, String title, String content, Long views) {
+	public Posting(Long id, String title, String content, Long views, Long categoryId) {
 		
 		this.id = id;
 		
@@ -50,6 +51,8 @@ public class Posting extends BaseEntity{
 		this.content = content;
 		
 		this.views = views;
+		
+		this.categoryId = categoryId;
 		
 	}
 	
@@ -75,6 +78,7 @@ public class Posting extends BaseEntity{
 		.title(title)
 		.content(content)
 		.views(views)
+		.categoryId(categoryId)
 		.build();
 
 	}

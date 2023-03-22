@@ -1,0 +1,12 @@
+  {{>layout/header}}
+  <h1>카테고리 목록</h1>
+    <div class="list-group">
+  {{#category}}
+  <input type="hidden" name="categoryId" id="categoryId" value="{{id}}" />
+  <a href="/post/list?categoryId={{id}}" class="list-group-item list-group-item-action">
+  	{{title}}
+  </a>
+  {{/category}}
+  </div>
+  
+  {{>layout/footer}}

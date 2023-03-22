@@ -27,8 +27,10 @@ public class PostingHistory extends BaseEntity{
 	
 	private Long views;
 	
+	private Long categoryId;
+	
 	@Builder
-	public PostingHistory(Long id, String title, String content, Long views) {
+	public PostingHistory(Long id, String title, String content, Long views, Long categoryId) {
 		
 		this.id = id;
 		
@@ -37,6 +39,8 @@ public class PostingHistory extends BaseEntity{
 		this.content = content;
 		
 		this.views = views;
+		
+		this.categoryId = categoryId;
 
 	}
 

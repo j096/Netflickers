@@ -32,8 +32,8 @@ public class PostingService {
 	CommentService commentService;
 	
 	@Transactional
-	public List<PostingDto> getPostList(Pageable pageable){
-		return postRepo.findAll(pageable).stream().map(PostingDto::new).collect(Collectors.toList());
+	public List<PostingDto> getPostList(Pageable pageable, String categoryId){
+		return postRepo.findAll(pageable).stream().filter(p->p.getCategoryId().equals(categoryId)).map(PostingDto::new).collect(Collectors.toList());
 	}
 	
 	@Transactional

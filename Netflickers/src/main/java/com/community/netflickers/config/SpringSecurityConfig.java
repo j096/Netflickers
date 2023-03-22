@@ -19,7 +19,7 @@ public class SpringSecurityConfig {
 	private SimpleUrlAuthenticationFailureHandler loginFailureHandler;
 	
 	// permitUrl 순서 중요 (리퀘스트 흐름상 먼저 오는 것이 먼저 기술되어야 한다.)
-	private static String[] permitUrl = {"/signup","/id-find","/member/**","/post/list","/post/read/**","/comment/list/**"};
+	private static String[] permitUrl = {"/signup","/id-find","/member/**","/","/post/list","/post/read/**","/comment/list/**"};
 	private static String[] authUrl = {"/post/write/**","/post/save/**","/post/update/**","/post/delete/**"
 			,"/comment/save","/comment/update/**","/comment/delete/**"};
 	private static String[] ignoreUrl = {"/h2-console/**","/js/**","/css/**","/favicon.ico"};
@@ -37,7 +37,7 @@ public class SpringSecurityConfig {
 						.formLogin()
 						.loginPage("/login")
 						.loginProcessingUrl("/login")
-		                .defaultSuccessUrl("/post/list",true)
+		                .defaultSuccessUrl("/",true)
 		                .failureHandler(loginFailureHandler)
 		                .permitAll()
 		                .and()
